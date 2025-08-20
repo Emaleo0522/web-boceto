@@ -477,7 +477,7 @@
 
         /* TESTIMONIOS SECTION */
         #testimonios {
-            background: var(--white);
+            background: var(--light-bg);
             padding: 80px 20px;
             max-width: 1400px;
             margin: 0 auto;
@@ -492,34 +492,120 @@
         }
 
         .testimonios-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
             gap: 30px;
         }
 
-        .testimonio-card {
-            background: var(--light-gray);
-            padding: 30px;
-            border-radius: 16px;
-            border-left: 4px solid var(--stanley-green);
-        }
-
-        .testimonio-text {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-style: italic;
-            color: var(--gray-text);
-        }
-
-        .testimonio-author {
+        /* NEW TESTIMONIAL DESIGN */
+        .snip1157 {
+            font-family: system-ui, -apple-system, sans-serif;
+            position: relative;
+            overflow: hidden;
+            margin: 10px;
+            min-width: 220px;
+            max-width: 320px;
+            width: 100%;
             color: var(--dark-text);
-            font-weight: 600;
+            text-align: left;
+            box-shadow: none !important;
         }
 
-        .testimonio-rating {
+        .snip1157 * {
+            box-sizing: border-box;
+            transition: all 0.35s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+        }
+
+        .snip1157 img {
+            max-width: 100%;
+            vertical-align: middle;
+            height: 90px;
+            width: 90px;
+            border-radius: 50%;
+            margin: 40px 0 0 10px;
+            border: 3px solid var(--stanley-green);
+            object-fit: cover;
+        }
+
+        .snip1157 blockquote {
+            display: block;
+            border-radius: 12px;
+            position: relative;
+            background-color: var(--white);
+            padding: 25px 50px 30px 50px;
+            font-size: 0.9em;
+            font-weight: 500;
+            margin: 0;
+            line-height: 1.6em;
+            font-style: italic;
+            box-shadow: 0 4px 15px rgba(45, 91, 63, 0.1);
+        }
+
+        .snip1157 blockquote:before,
+        .snip1157 blockquote:after {
+            content: '"';
+            position: absolute;
+            font-size: 50px;
+            opacity: 0.3;
+            font-style: normal;
+            color: var(--stanley-green);
+            font-family: Georgia, serif;
+        }
+
+        .snip1157 blockquote:before {
+            top: 10px;
+            left: 20px;
+        }
+
+        .snip1157 blockquote:after {
+            content: '"';
+            right: 20px;
+            bottom: -10px;
+        }
+
+        .snip1157 .arrow {
+            top: 100%;
+            width: 0;
+            height: 0;
+            border-left: 0 solid transparent;
+            border-right: 25px solid transparent;
+            border-top: 25px solid var(--white);
+            margin: 0;
+            position: absolute;
+        }
+
+        .snip1157 .author {
+            position: absolute;
+            bottom: 45px;
+            padding: 0 10px 0 120px;
+            margin: 0;
+            text-transform: uppercase;
+            color: var(--white);
+            transform: translateY(50%);
+        }
+
+        .snip1157 .author h5 {
+            opacity: 0.9;
+            margin: 0;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .snip1157 .author h5 span {
+            font-weight: 400;
+            text-transform: none;
+            padding-left: 5px;
+            opacity: 0.8;
+        }
+
+        .snip1157 .rating {
             color: var(--stanley-yellow);
-            margin-bottom: 15px;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         /* ABOUT STANLEY SECTION */
@@ -730,8 +816,23 @@
 
             /* TESTIMONIOS MOBILE */
             .testimonios-grid {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: center;
                 gap: 20px;
+            }
+
+            .snip1157 {
+                max-width: 100%;
+                min-width: 280px;
+            }
+
+            .snip1157 .author {
+                padding: 0 10px 0 110px;
+                font-size: 0.8rem;
+            }
+
+            .snip1157 .author h5 {
+                font-size: 0.8rem;
             }
 
             /* ABOUT MOBILE */
@@ -1013,29 +1114,41 @@
         <h2 class="testimonios-title">Lo que dicen nuestros clientes</h2>
         
         <div class="testimonios-grid">
-            <div class="testimonio-card">
-                <div class="testimonio-rating">★★★★★</div>
-                <p class="testimonio-text">
-                    "Mi termo Stanley me acompaña a todas partes. Después de 3 años de uso diario, sigue manteniendo el mate caliente toda la mañana. Vale cada peso."
-                </p>
-                <div class="testimonio-author">- María González, Buenos Aires</div>
-            </div>
-            
-            <div class="testimonio-card">
-                <div class="testimonio-rating">★★★★★</div>
-                <p class="testimonio-text">
-                    "Increíble calidad. Se me cayó desde el auto y ni un rasguño. El mate sigue saliendo perfecto con el tapón cebador."
-                </p>
-                <div class="testimonio-author">- Carlos Mendoza, Córdoba</div>
-            </div>
-            
-            <div class="testimonio-card">
-                <div class="testimonio-rating">★★★★★</div>
-                <p class="testimonio-text">
-                    "La bombilla Stanley es lo mejor que compré este año. El filtro funciona perfecto y es súper fácil de limpiar."
-                </p>
-                <div class="testimonio-author">- Ana Torres, Rosario</div>
-            </div>
+            <figure class="snip1157">
+                <blockquote>
+                    <div class="rating">★★★★★</div>
+                    Mi termo Stanley me acompaña a todas partes. Después de 3 años de uso diario, sigue manteniendo el mate caliente toda la mañana. La calidad es increíble y vale cada peso invertido.
+                    <div class="arrow"></div>
+                </blockquote>
+                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b120?w=150&h=150&fit=crop&crop=face" alt="María González" />
+                <div class="author">
+                    <h5>María González <span>Buenos Aires</span></h5>
+                </div>
+            </figure>
+
+            <figure class="snip1157">
+                <blockquote>
+                    <div class="rating">★★★★★</div>
+                    Increíble resistencia y durabilidad. Se me cayó varias veces y ni un rasguño. El termo mantiene la temperatura perfecta y el diseño es súper elegante para cualquier ocasión.
+                    <div class="arrow"></div>
+                </blockquote>
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Carlos Mendoza" />
+                <div class="author">
+                    <h5>Carlos Mendoza <span>Córdoba</span></h5>
+                </div>
+            </figure>
+
+            <figure class="snip1157">
+                <blockquote>
+                    <div class="rating">★★★★★</div>
+                    La bombilla Stanley es lo mejor que compré este año. El filtro funciona perfecto, es súper fácil de limpiar y el mate sale siempre con el sabor ideal. Excelente inversión.
+                    <div class="arrow"></div>
+                </blockquote>
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face" alt="Ana Torres" />
+                <div class="author">
+                    <h5>Ana Torres <span>Rosario</span></h5>
+                </div>
+            </figure>
         </div>
     </section>
 
