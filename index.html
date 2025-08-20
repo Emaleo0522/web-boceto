@@ -168,7 +168,7 @@
 
         /* VUE GALLERY STYLES */
         .vue-gallery-section {
-            --gallery-width: min(800px, 90vw);
+            --gallery-width: min(1000px, 90vw);
             padding: 60px 20px;
             display: grid;
             place-items: center;
@@ -194,7 +194,7 @@
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 8px 25px rgba(45, 91, 63, 0.3);
-            transition: translate 0.8s ease, scale 0.8s ease;
+            transition: translate 0.8s, scale 0.8s;
             will-change: transform;
             border: 3px solid var(--white);
         }
@@ -893,7 +893,7 @@
                     :key="item.id"
                     :data-pos="item.pos"
                     :style="{
-                        translate: `calc(var(--gallery-width) * 0.2 * ${item.pos})`,
+                        translate: `calc(var(--gallery-width) / 5 * 0.2 * ${item.pos})`,
                         backgroundImage: `url(${item.url})`
                     }"
                     @click="shuffle(item)"
