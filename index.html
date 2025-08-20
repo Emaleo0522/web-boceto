@@ -6,7 +6,6 @@
     <meta name="description" content="Stanley Argentina - Termos, mates y accesorios originales. Hidratá tu día con la mejor calidad.">
     <title>Stanley - Hidratá tu día</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <style>
         /* VARIABLES EDITABLES */
         :root {
@@ -166,72 +165,16 @@
             margin: 0 auto;
         }
 
-        /* VUE GALLERY STYLES */
-        .vue-gallery-section {
-            --gallery-width: min(1400px, 95vw);
+        /* HOVER GALLERY STYLES */
+        .gallery-section {
             padding: 80px 20px;
-            display: grid;
-            place-items: center;
-            min-height: 600px;
-        }
-
-        .stanley-gallery {
-            width: var(--gallery-width);
-            list-style-type: none;
-            display: grid;
-            margin: 40px 0;
-        }
-
-        .stanley-gallery li {
-            position: relative;
-            grid-column: 1;
-            grid-row: 1;
-            width: calc(var(--gallery-width) / 4);
-            aspect-ratio: 1;
-            cursor: pointer;
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(45, 91, 63, 0.3);
-            transition: translate 0.8s, scale 0.8s;
-            will-change: transform;
-            border: 4px solid var(--white);
-        }
-
-        .stanley-gallery li::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-color: rgba(45, 91, 63, 0.6);
-            border-radius: 13px;
-        }
-
-        .stanley-gallery li[data-pos='0'] { scale: 1; z-index: 1; }
-        .stanley-gallery li[data-pos='1'] { scale: 1.4; z-index: 5; }
-        .stanley-gallery li[data-pos='2'] { scale: 1.8; z-index: 10; }
-        .stanley-gallery li[data-pos='3'] { scale: 1.4; z-index: 5; }
-        .stanley-gallery li[data-pos='4'] { scale: 1; z-index: 1; }
-
-        .stanley-gallery li[data-pos='1']::after { 
-            background-color: rgba(45, 91, 63, 0.4); 
-        }
-        .stanley-gallery li[data-pos='2']::after { 
-            background-color: transparent; 
-        }
-        .stanley-gallery li[data-pos='3']::after { 
-            background-color: rgba(45, 91, 63, 0.4); 
-        }
-
-        .stanley-gallery li:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 35px rgba(45, 91, 63, 0.4);
+            margin: 0 auto;
+            max-width: 1400px;
         }
 
         .gallery-title {
             text-align: center;
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-size: clamp(2rem, 4vw, 3rem);
             color: var(--dark-text);
             margin-bottom: 20px;
             font-weight: 700;
@@ -241,10 +184,77 @@
             text-align: center;
             font-size: 1.1rem;
             color: var(--gray-text);
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        .gallery-wrap {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(45, 91, 63, 0.15);
+        }
+
+        .gallery-item {
+            flex: 1;
+            height: 100%;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            transition: flex 0.8s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            flex: 7;
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(45, 91, 63, 0.3), rgba(0, 0, 0, 0.2));
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 0;
+        }
+
+        .item-info {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            color: var(--white);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .gallery-item:hover .item-info {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .item-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .item-color {
+            font-size: 1rem;
+            color: var(--stanley-yellow);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
         }
 
         .catalogo-title {
@@ -757,23 +767,39 @@
                 height: 30px;
             }
 
-            /* VUE GALLERY MOBILE */
-            .vue-gallery-section {
-                --gallery-width: min(400px, 95vw);
+            /* HOVER GALLERY MOBILE */
+            .gallery-section {
                 padding: 40px 20px;
-                min-height: 500px;
             }
 
-            .stanley-gallery li {
-                border: 3px solid var(--white);
-                width: calc(var(--gallery-width) / 3);
+            .gallery-wrap {
+                flex-direction: column;
+                height: auto;
+                min-height: 400px;
             }
 
-            .stanley-gallery li[data-pos='0'] { scale: 0.8; }
-            .stanley-gallery li[data-pos='1'] { scale: 1.1; }
-            .stanley-gallery li[data-pos='2'] { scale: 1.4; }
-            .stanley-gallery li[data-pos='3'] { scale: 1.1; }
-            .stanley-gallery li[data-pos='4'] { scale: 0.8; }
+            .gallery-item {
+                height: 120px;
+                transition: height 0.6s ease, flex 0.6s ease;
+            }
+
+            .gallery-item:hover {
+                height: 300px;
+                flex: initial;
+            }
+
+            .item-info {
+                bottom: 20px;
+                left: 20px;
+            }
+
+            .item-name {
+                font-size: 1.2rem;
+            }
+
+            .item-color {
+                font-size: 0.9rem;
+            }
 
             /* FOOTER MOBILE */
             .footer-container {
@@ -884,37 +910,51 @@
         </div>
     </section>
 
-    <!-- STANLEY INTERACTIVE GALLERY -->
-    <section id="catalogo" class="vue-gallery-section">
-        <h2 class="gallery-title">Productos Destacados Stanley</h2>
-        <p class="gallery-subtitle">Hacé clic en cualquier producto para verlo en detalle. Cada Stanley está diseñado para acompañarte en tus mejores momentos.</p>
+    <!-- STANLEY HOVER GALLERY -->
+    <section id="catalogo" class="gallery-section">
+        <h2 class="gallery-title">Descubrí nuestra línea Stanley</h2>
+        <p class="gallery-subtitle">Pasá el mouse sobre cada producto para verlo en detalle. Cada Stanley está diseñado para acompañarte en tus mejores momentos.</p>
         
-        <div id="stanley-gallery-app">
-            <ul class="stanley-gallery">
-                <li
-                    v-for="item in items"
-                    :key="item.id"
-                    :data-pos="item.pos"
-                    :style="{
-                        translate: `calc(var(--gallery-width) / 4 * 0.15 * ${item.pos})`,
-                        backgroundImage: `url(${item.url})`
-                    }"
-                    @click="shuffle(item)"
-                    :title="item.name + ' - ' + item.color"
-                >
-                </li>
-            </ul>
-            
-            <div class="gallery-info" style="text-align: center; margin-top: 40px;">
-                <h3 style="color: var(--stanley-green); font-size: 1.5rem; margin-bottom: 10px;">{{ currentItem.name }}</h3>
-                <p style="color: var(--gray-text); font-size: 1.1rem;">{{ currentItem.color }}</p>
-                <a :href="whatsappLink" class="cta-button" style="margin-top: 20px; display: inline-flex;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.516"/>
-                    </svg>
-                    Consultar este producto
-                </a>
+        <div class="gallery-wrap">
+            <div class="gallery-item" style="background-image: url('https://stanleypm.vtexassets.com/arquivos/ids/158736/Mate-System_1600ml_4.png')">
+                <div class="item-info">
+                    <div class="item-name">Mate System 1.6L</div>
+                    <div class="item-color">Verde Stanley</div>
+                </div>
             </div>
+            <div class="gallery-item" style="background-image: url('https://stanleypm.vtexassets.com/arquivos/ids/160611/MAte%20System%20Toast_4.png')">
+                <div class="item-info">
+                    <div class="item-name">Mate System 1.2L</div>
+                    <div class="item-color">Toast</div>
+                </div>
+            </div>
+            <div class="gallery-item" style="background-image: url('https://stanleypm.vtexassets.com/arquivos/ids/159540/950-lake.png.png')">
+                <div class="item-info">
+                    <div class="item-name">Classic 950ml</div>
+                    <div class="item-color">Lake Blue</div>
+                </div>
+            </div>
+            <div class="gallery-item" style="background-image: url('https://stanleypm.vtexassets.com/arquivos/ids/159549/950-lilac.png.png')">
+                <div class="item-info">
+                    <div class="item-name">Classic 950ml</div>
+                    <div class="item-color">Lilac</div>
+                </div>
+            </div>
+            <div class="gallery-item" style="background-image: url('https://stanleypm.vtexassets.com/arquivos/ids/156826/14L_2.jpg')">
+                <div class="item-info">
+                    <div class="item-name">Classic 1.4L</div>
+                    <div class="item-color">Lava</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="https://wa.me/5492604000000?text=Hola%20quiero%20info%20de%20productos%20Stanley" class="cta-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.516"/>
+                </svg>
+                Ver todos los productos
+            </a>
         </div>
     </section>
 
@@ -1095,80 +1135,6 @@
         // VARIABLES EDITABLES
         const WHATSAPP_NUMBER = '+5492604000000';
 
-        // VUE.JS STANLEY GALLERY
-        const { createApp, reactive, computed } = Vue;
-
-        createApp({
-            setup() {
-                const items = reactive([
-                    {
-                        id: 0,
-                        pos: 0,
-                        url: 'https://stanleypm.vtexassets.com/arquivos/ids/158736/Mate-System_1600ml_4.png',
-                        name: 'Mate System 1.6L',
-                        color: 'Verde Stanley'
-                    },
-                    {
-                        id: 1,
-                        pos: 1,
-                        url: 'https://stanleypm.vtexassets.com/arquivos/ids/160611/MAte%20System%20Toast_4.png',
-                        name: 'Mate System 1.2L',
-                        color: 'Toast'
-                    },
-                    {
-                        id: 2,
-                        pos: 2,
-                        url: 'https://stanleypm.vtexassets.com/arquivos/ids/159540/950-lake.png.png',
-                        name: 'Classic 950ml',
-                        color: 'Lake Blue'
-                    },
-                    {
-                        id: 3,
-                        pos: 3,
-                        url: 'https://stanleypm.vtexassets.com/arquivos/ids/159549/950-lilac.png.png',
-                        name: 'Classic 950ml',
-                        color: 'Lilac'
-                    },
-                    {
-                        id: 4,
-                        pos: 4,
-                        url: 'https://stanleypm.vtexassets.com/arquivos/ids/156826/14L_2.jpg',
-                        name: 'Classic 1.4L',
-                        color: 'Lava'
-                    }
-                ]);
-
-                const currentItem = computed(() => {
-                    return items.find(item => item.pos === 2) || items[0];
-                });
-
-                const whatsappLink = computed(() => {
-                    const message = `Hola! Me interesa el ${currentItem.value.name} color ${currentItem.value.color}. ¿Podrían darme más información?`;
-                    return `https://wa.me/5492604000000?text=${encodeURIComponent(message)}`;
-                });
-
-                function shuffle(item) {
-                    const heroPos = Math.floor(items.length / 2); // Posición 2 (centro)
-                    const hero = items.find(({ pos }) => pos === heroPos);
-                    const target = items.find(({ id }) => id === item.id);
-                    
-                    // Solo intercambiar si no es el mismo elemento
-                    if (hero && target && hero.id !== target.id) {
-                        const tempPos = hero.pos;
-                        hero.pos = target.pos;
-                        target.pos = tempPos;
-                    }
-                }
-
-                return {
-                    items,
-                    currentItem,
-                    whatsappLink,
-                    shuffle,
-                }
-            },
-        }).mount('#stanley-gallery-app');
-
         // GSAP ANIMATIONS
         gsap.registerPlugin();
 
@@ -1282,23 +1248,21 @@
             });
         });
 
-        // Vue Gallery Animation
+        // Gallery Animation
         window.addEventListener('load', () => {
             // Animate gallery entrance on load
-            gsap.fromTo('.stanley-gallery li', 
+            gsap.fromTo('.gallery-item', 
                 {
                     opacity: 0,
-                    scale: 0.5,
-                    y: 50
+                    y: 30
                 },
                 {
                     opacity: 1,
-                    scale: 1,
                     y: 0,
                     duration: 0.8,
                     stagger: 0.1,
-                    ease: 'back.out(1.7)',
-                    delay: 1
+                    ease: 'power2.out',
+                    delay: 0.5
                 }
             );
         });
