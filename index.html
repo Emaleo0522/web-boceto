@@ -168,10 +168,11 @@
 
         /* VUE GALLERY STYLES */
         .vue-gallery-section {
-            --gallery-width: min(1000px, 90vw);
-            padding: 60px 20px;
+            --gallery-width: min(1400px, 95vw);
+            padding: 80px 20px;
             display: grid;
             place-items: center;
+            min-height: 600px;
         }
 
         .stanley-gallery {
@@ -185,18 +186,18 @@
             position: relative;
             grid-column: 1;
             grid-row: 1;
-            width: calc(var(--gallery-width) / 5);
+            width: calc(var(--gallery-width) / 4);
             aspect-ratio: 1;
             cursor: pointer;
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(45, 91, 63, 0.3);
+            box-shadow: 0 10px 30px rgba(45, 91, 63, 0.3);
             transition: translate 0.8s, scale 0.8s;
             will-change: transform;
-            border: 3px solid var(--white);
+            border: 4px solid var(--white);
         }
 
         .stanley-gallery li::after {
@@ -758,12 +759,14 @@
 
             /* VUE GALLERY MOBILE */
             .vue-gallery-section {
-                --gallery-width: min(350px, 90vw);
+                --gallery-width: min(400px, 95vw);
                 padding: 40px 20px;
+                min-height: 500px;
             }
 
             .stanley-gallery li {
-                border: 2px solid var(--white);
+                border: 3px solid var(--white);
+                width: calc(var(--gallery-width) / 3);
             }
 
             .stanley-gallery li[data-pos='0'] { scale: 0.8; }
@@ -893,7 +896,7 @@
                     :key="item.id"
                     :data-pos="item.pos"
                     :style="{
-                        translate: `calc(var(--gallery-width) / 5 * 0.2 * ${item.pos})`,
+                        translate: `calc(var(--gallery-width) / 4 * 0.15 * ${item.pos})`,
                         backgroundImage: `url(${item.url})`
                     }"
                     @click="shuffle(item)"
@@ -1145,10 +1148,16 @@
                 });
 
                 function shuffle(item) {
-                    const heroPos = Math.floor(items.length / 2);
-                    const hero = items.findIndex(({ pos }) => pos === heroPos);
-                    const target = items.findIndex(({ id }) => id === item.id);
-                    [items[target].pos, items[hero].pos] = [items[hero].pos, items[target].pos];
+                    const heroPos = Math.floor(items.length / 2); // Posición 2 (centro)
+                    const hero = items.find(({ pos }) => pos === heroPos);
+                    const target = items.find(({ id }) => id === item.id);
+                    
+                    // Solo intercambiar si no es el mismo elemento
+                    if (hero && target && hero.id !== target.id) {
+                        const tempPos = hero.pos;
+                        hero.pos = target.pos;
+                        target.pos = tempPos;
+                    }
                 }
 
                 return {
