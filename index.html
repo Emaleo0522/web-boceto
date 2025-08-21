@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Stanley Argentina - Termos, mates y accesorios originales. Hidratá tu día con la mejor calidad.">
     <title>Stanley - Hidratá tu día</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         /* VARIABLES EDITABLES */
@@ -18,6 +19,11 @@
             --gray-text: #6c757d;
             --light-gray: #e9ecef;
             --overlay-color: rgba(255, 255, 255, 0.9);
+            /* BANNER VARIABLES */
+            --banner-w: 130px;
+            --banner-h: 380px;
+            --banner-gap: 0.5cm;
+            --banner-radius: 14px;
         }
 
         /* RESET Y BASE */
@@ -46,6 +52,28 @@
             position: relative;
             height: 100vh;
             min-height: 600px;
+            background-image: url('pareja-abrazandose-por-detras-del-tiro.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(248, 249, 250, 0.85);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 2;
             display: grid;
             grid-template-columns: 1fr 1fr;
             align-items: center;
@@ -53,7 +81,8 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
-            overflow: hidden;
+            height: 100%;
+            min-height: 600px;
         }
 
         .hero-image {
@@ -61,15 +90,46 @@
             width: 100%;
             height: 80%;
             min-height: 500px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(45, 91, 63, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        /* BANNER MOSAICO STYLES */
+        .banners-row {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--banner-gap);
+            flex-wrap: nowrap;
+            justify-content: center;
+        }
+
+        .banner-card {
+            width: var(--banner-w);
+            height: var(--banner-h);
+            border-radius: var(--banner-radius);
+            overflow: hidden;
+            background: #171a1c;
+            box-shadow: 0 12px 26px rgba(0,0,0,.34);
+            position: relative;
+            will-change: transform, opacity;
+            margin-top: var(--mt, 0);
+        }
+
+        .banner-card video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.02);
+            display: block;
         }
 
         /* FALLBACK PARA IMÁGENES ROTAS */
@@ -115,6 +175,65 @@
             line-height: 1.1;
             opacity: 0;
             transform: translateY(30px);
+            overflow: hidden;
+        }
+
+        .hero-headline .word {
+            display: inline-block;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(100%);
+            animation: revealWord 0.8s ease-out forwards;
+        }
+
+        .hero-headline .word:nth-child(1) { animation-delay: 0.2s; }
+        .hero-headline .word:nth-child(2) { animation-delay: 0.4s; }
+        .hero-headline .word:nth-child(3) { animation-delay: 0.6s; }
+        .hero-headline .word:nth-child(4) { animation-delay: 0.8s; }
+        .hero-headline .word:nth-child(5) { animation-delay: 1.0s; }
+
+        @keyframes revealWord {
+            0% {
+                opacity: 0;
+                transform: translateY(100%) rotateX(-90deg);
+                filter: blur(4px);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translateY(20%) rotateX(-45deg);
+                filter: blur(2px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0%) rotateX(0deg);
+                filter: blur(0px);
+            }
+        }
+
+        .hero-headline .highlight {
+            background: linear-gradient(135deg, var(--stanley-green), var(--stanley-light-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .hero-headline .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--stanley-yellow), var(--stanley-green));
+            animation: underlineGrow 0.6s ease-out forwards;
+            animation-delay: 1.2s;
+            border-radius: 2px;
+        }
+
+        @keyframes underlineGrow {
+            0% { width: 0; }
+            100% { width: 100%; }
         }
 
         .hero-subheadline {
@@ -350,62 +469,6 @@
             color: var(--stanley-yellow);
         }
 
-        /* REDES SECTION */
-        #redes {
-            background: var(--light-gray);
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        .redes-title {
-            font-size: 2rem;
-            color: var(--dark-text);
-            margin-bottom: 40px;
-            font-weight: 700;
-        }
-
-        .social-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .social-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(40px);
-        }
-
-        .social-button.facebook {
-            background: #1877f2;
-        }
-
-        .social-button.instagram {
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-        }
-
-        .social-button.whatsapp {
-            background: #25d366;
-        }
-
-        .social-button svg {
-            width: 40px;
-            height: 40px;
-            fill: white;
-        }
-
-        .social-button:hover {
-            transform: translateY(-10px) scale(1.1);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-        }
 
         /* HEADER */
         header {
@@ -609,11 +672,62 @@
         }
 
         /* ABOUT STANLEY SECTION */
+        .about-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .about-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 100%;
+            background-image: url('813b07134956809.61df1bc684696.png');
+            background-size: 1400px auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.04;
+            z-index: 0;
+            pointer-events: none;
+        }
+
         #about {
-            padding: 80px 20px;
+            padding: 120px 20px;
             max-width: 1400px;
             margin: 0 auto;
             text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 45%, var(--stanley-green), transparent 55%);
+            opacity: 0.02;
+            animation: shimmer 8s infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .about-header {
+            position: relative;
+            margin-bottom: 20px;
+            z-index: 2;
         }
 
         .about-title {
@@ -621,6 +735,29 @@
             color: var(--dark-text);
             margin-bottom: 30px;
             font-weight: 700;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .about-title.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-subtitle {
+            font-size: 1.4rem;
+            color: var(--stanley-green);
+            font-weight: 600;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out 0.2s;
+        }
+
+        .about-subtitle.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .about-text {
@@ -629,38 +766,154 @@
             max-width: 800px;
             margin: 0 auto 40px;
             line-height: 1.7;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out 0.4s;
+        }
+
+        .about-text.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin: 10px 0;
+            padding: 5px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-item {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .stat-item.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--stanley-green), var(--stanley-light-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--gray-text);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .about-features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-            margin-top: 50px;
+            margin-top: 10px;
+            position: relative;
+            z-index: 2;
         }
 
         .feature-card {
             background: var(--white);
-            padding: 30px;
-            border-radius: 16px;
+            padding: 40px 30px;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(45, 91, 63, 0.1);
+            box-shadow: 0 10px 30px rgba(45, 91, 63, 0.1);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.8s ease-out;
+            cursor: pointer;
+        }
+
+        .feature-card.animate {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(45, 91, 63, 0.2);
         }
 
         .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: 4rem;
+            margin-bottom: 25px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: rotateY(360deg) scale(1.1);
         }
 
         .feature-title {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--dark-text);
             margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .feature-card:hover .feature-title {
+            color: var(--stanley-green);
         }
 
         .feature-description {
             color: var(--gray-text);
             line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .feature-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--stanley-yellow), #ffed4e);
+            color: var(--dark-text);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-badge {
+            opacity: 1;
+            transform: scale(1);
         }
 
         /* FAQ SECTION */
@@ -778,6 +1031,9 @@
                 margin-top: 120px;
                 height: auto;
                 min-height: 80vh;
+            }
+
+            .hero-container {
                 grid-template-columns: 1fr;
                 gap: 30px;
                 padding: 40px 20px;
@@ -949,6 +1205,257 @@
             }
         }
 
+        /* FLOATING WHATSAPP BUTTON */
+        a {
+            text-decoration: none;
+        }
+
+        .floating_btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .floating_btn.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes pulsing {
+            to {
+                box-shadow: 0 0 0 30px rgba(66, 219, 135, 0);
+            }
+        }
+
+        .contact_icon {
+            background-color: #42db87;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            font-size: 30px;
+            border-radius: 50px;
+            text-align: center;
+            box-shadow: 2px 2px 3px #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translatey(0px);
+            box-shadow: 0 0 0 0 #42db87;
+            -webkit-animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+            -moz-animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+            -ms-animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+            animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+            font-weight: normal;
+            font-family: sans-serif;
+            text-decoration: none !important;
+            transition: all 300ms ease-in-out;
+        }
+
+        .text_icon {
+            margin-top: 8px;
+            color: #707070;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* SOCIAL MEDIA SECTION */
+        #social-contact {
+            background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 100%);
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #social-contact::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--stanley-green) 0%, transparent 70%);
+            opacity: 0.03;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .social-contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .social-subtitle {
+            font-size: 1rem;
+            color: var(--gray-text);
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .social-icons-container {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .social-icon-wrapper {
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px) scale(0.8);
+        }
+
+        .social-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 25px;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .social-icon:hover::before {
+            transform: translateX(100%);
+        }
+
+        .social-icon.facebook {
+            background: linear-gradient(135deg, #1877f2 0%, #42a5f5 100%);
+            box-shadow: 0 15px 35px rgba(24, 119, 242, 0.3);
+        }
+
+        .social-icon.facebook:hover {
+            transform: translateY(-10px) rotateY(15deg) scale(1.1);
+            box-shadow: 0 25px 50px rgba(24, 119, 242, 0.5);
+        }
+
+        .social-icon.instagram {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 15px 35px rgba(188, 24, 136, 0.3);
+        }
+
+        .social-icon.instagram:hover {
+            transform: translateY(-10px) rotateY(-15deg) scale(1.1);
+            box-shadow: 0 25px 50px rgba(188, 24, 136, 0.5);
+        }
+
+        .social-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+            transition: all 0.3s ease;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .social-icon:hover svg {
+            transform: scale(1.2) rotateZ(5deg);
+        }
+
+        .social-label {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(45, 91, 63, 0.9);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateX(-50%) translateY(10px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .social-icon-wrapper:hover .social-label {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .connection-line {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--stanley-green), var(--stanley-yellow));
+            transform: translateX(-50%) translateY(-50%);
+            opacity: 0;
+            transition: all 1s ease;
+        }
+
+        .connection-line.active {
+            height: 80px;
+            opacity: 0.6;
+        }
+
+        /* RESPONSIVE SOCIAL */
+        @media (max-width: 768px) {
+            .social-icons-container {
+                gap: 35px;
+            }
+            
+            .social-icon {
+                width: 80px;
+                height: 80px;
+                border-radius: 20px;
+            }
+            
+            .social-icon svg {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
         /* ACCESIBILIDAD */
         @media (prefers-reduced-motion: reduce) {
             * {
@@ -996,18 +1503,39 @@
 
     <!-- HERO SECTION -->
     <section id="hero">
-        <div class="hero-content">
-            <h1 class="hero-headline">Hidratá tu día con Stanley.</h1>
-            <p class="hero-subheadline">Termos, mates y accesorios originales. Envíos a todo el país.</p>
-            <a href="https://wa.me/5492604000000?text=Hola%20quiero%20info%20de%20productos%20Stanley" class="cta-button">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.516"/>
-                </svg>
-                Consultar por WhatsApp
-            </a>
-        </div>
-        <div class="hero-image">
-            <img src="https://stanleypm.vtexassets.com/arquivos/ids/158736/Mate-System_1600ml_4.png" alt="Persona sosteniendo termo Stanley Mate System" loading="eager">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-headline">
+                    <span class="word">Hidratá</span>
+                    <span class="word">tu</span>
+                    <span class="word">día</span>
+                    <span class="word">con</span>
+                    <span class="word highlight">Stanley.</span>
+                </h1>
+                <p class="hero-subheadline">Termos, mates y accesorios originales. Envíos a todo el país.</p>
+                <a href="https://wa.me/5492604000000?text=Hola%20quiero%20info%20de%20productos%20Stanley" class="cta-button">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.516"/>
+                    </svg>
+                    Consultar por WhatsApp
+                </a>
+            </div>
+            <div class="hero-image">
+                <div class="banners-row" id="bannersDemo">
+                    <div class="banner-card" data-mt="-6">
+                        <video src="13459051_720_1280_30fps.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </div>
+                    <div class="banner-card" data-mt="16">
+                        <video src="14217640-hd_720_1280_60fps.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </div>
+                    <div class="banner-card" data-mt="46">
+                        <video src="19314935-hd_720_1280_30fps.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </div>
+                    <div class="banner-card" data-mt="-10">
+                        <video src="6912128-hd_720_1280_25fps.mp4" autoplay muted loop playsinline preload="metadata"></video>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1059,55 +1587,60 @@
         </div>
     </section>
 
-    <!-- REDES SECTION -->
-    <section id="redes">
-        <h2 class="redes-title">Seguinos en redes</h2>
-        <div class="social-buttons">
-            <a href="#" class="social-button facebook">
-                <svg viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-            </a>
-            <a href="#" class="social-button instagram">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-            </a>
-            <a href="https://wa.me/5492604000000" class="social-button whatsapp">
-                <svg viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.516"/>
-                </svg>
-            </a>
-        </div>
-    </section>
-
     <!-- ABOUT STANLEY SECTION -->
-    <section id="about">
-        <h2 class="about-title">Sobre Stanley</h2>
-        <p class="about-text">
-            Desde 1913, Stanley ha sido sinónimo de durabilidad y calidad. Nuestros productos están diseñados para acompañarte en cada aventura, manteniendo tus bebidas a la temperatura perfecta.
-        </p>
-        
-        <div class="about-features">
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <h3 class="feature-title">Garantía de Por Vida</h3>
-                <p class="feature-description">Todos nuestros productos incluyen garantía de por vida contra defectos de fabricación.</p>
+    <div class="about-wrapper">
+        <section id="about">
+            <div class="about-header">
+                <div class="about-subtitle">Desde 1913</div>
+                <h2 class="about-title">Sobre Stanley</h2>
+                <p class="about-text">
+                    Desde 1913, Stanley ha sido sinónimo de durabilidad y calidad. Nuestros productos están diseñados para acompañarte en cada aventura, manteniendo tus bebidas a la temperatura perfecta.
+                </p>
+            </div>
+
+            <div class="stats-section">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="111">0</span>
+                    <span class="stat-label">Años de Historia</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="40">0</span>
+                    <span class="stat-label">Horas Caliente</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="45">0</span>
+                    <span class="stat-label">Horas Frío</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="6">0</span>
+                    <span class="stat-label">Días con Hielo</span>
+                </div>
             </div>
             
-            <div class="feature-card">
-                <div class="feature-icon">🌡️</div>
-                <h3 class="feature-title">Tecnología Térmica</h3>
-                <p class="feature-description">Mantiene bebidas calientes 40 horas, frías 45 horas, o hielo hasta 6 días.</p>
+            <div class="about-features">
+                <div class="feature-card">
+                    <div class="feature-badge">Premium</div>
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Garantía de Por Vida</h3>
+                    <p class="feature-description">Todos nuestros productos incluyen garantía de por vida contra defectos de fabricación. Confianza total en cada compra.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-badge">Tech</div>
+                    <div class="feature-icon">🌡️</div>
+                    <h3 class="feature-title">Tecnología Térmica</h3>
+                    <p class="feature-description">Mantiene bebidas calientes 40 horas, frías 45 horas, o hielo hasta 6 días. Innovación que perdura.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-badge">Eco</div>
+                    <div class="feature-icon">♻️</div>
+                    <h3 class="feature-title">Sustentable</h3>
+                    <p class="feature-description">Fabricado con materiales reciclables y diseñado para durar toda la vida. Cuidamos el planeta juntos.</p>
+                </div>
             </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">♻️</div>
-                <h3 class="feature-title">Sustentable</h3>
-                <p class="feature-description">Fabricado con materiales reciclables y diseñado para durar toda la vida.</p>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <!-- TESTIMONIOS SECTION -->
     <section id="testimonios">
@@ -1149,6 +1682,36 @@
                     <h5>Ana Torres <span>Rosario</span></h5>
                 </div>
             </figure>
+        </div>
+    </section>
+
+    <!-- SOCIAL CONTACT SECTION -->
+    <section id="social-contact">
+        <div class="social-contact-container">
+            <h2 class="social-title">Contáctanos por nuestras redes</h2>
+            <p class="social-subtitle">Síguenos en nuestras redes sociales para conocer las últimas novedades, promociones y contenido exclusivo de Stanley.</p>
+            
+            <div class="social-icons-container">
+                <div class="social-icon-wrapper">
+                    <div class="connection-line"></div>
+                    <a href="#" class="social-icon facebook" target="_blank">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <span class="social-label">Síguenos en Facebook</span>
+                </div>
+                
+                <div class="social-icon-wrapper">
+                    <div class="connection-line"></div>
+                    <a href="#" class="social-icon instagram" target="_blank">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <span class="social-label">Síguenos en Instagram</span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1207,6 +1770,36 @@
         </div>
     </section>
 
+    <!-- SOCIAL CONTACT SECTION -->
+    <section id="social-contact">
+        <div class="social-contact-container">
+            <h2 class="social-title">Contáctanos por nuestras redes</h2>
+            <p class="social-subtitle">Síguenos en nuestras redes sociales para conocer las últimas novedades, promociones y contenido exclusivo de Stanley.</p>
+            
+            <div class="social-icons-container">
+                <div class="social-icon-wrapper">
+                    <div class="connection-line"></div>
+                    <a href="#" class="social-icon facebook" target="_blank">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <span class="social-label">Síguenos en Facebook</span>
+                </div>
+                
+                <div class="social-icon-wrapper">
+                    <div class="connection-line"></div>
+                    <a href="#" class="social-icon instagram" target="_blank">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <span class="social-label">Síguenos en Instagram</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- FOOTER -->
     <footer>
         <div class="footer-container">
@@ -1244,6 +1837,16 @@
         </div>
     </footer>
 
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <div class="floating_btn">
+        <a target="_blank" href="https://wa.me/5492604000000?text=Hola%20quiero%20info%20de%20productos%20Stanley">
+            <div class="contact_icon">
+                <i class="fa fa-whatsapp my-float"></i>
+            </div>
+        </a>
+        <p class="text_icon">Háblanos</p>
+    </div>
+
     <script>
         // VARIABLES EDITABLES
         const WHATSAPP_NUMBER = '+5492604000000';
@@ -1258,20 +1861,22 @@
             .to('.hero-headline', {
                 opacity: 1,
                 y: 0,
-                duration: 1,
+                duration: 0.5,
                 ease: 'power2.out'
             })
             .to('.hero-subheadline', {
                 opacity: 1,
                 y: 0,
                 duration: 0.8,
-                ease: 'power2.out'
-            }, '-=0.5')
+                ease: 'power2.out',
+                delay: 1.0
+            }, '-=0.2')
             .to('.cta-button', {
                 opacity: 1,
                 scale: 1,
                 duration: 0.6,
-                ease: 'back.out(1.7)'
+                ease: 'back.out(1.7)',
+                delay: 0.3
             }, '-=0.3');
 
         // CTA Button Hover Animation
@@ -1314,52 +1919,6 @@
             });
         });
 
-        // Social Buttons Animation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const socialButtons = entry.target.querySelectorAll('.social-button');
-                    gsap.fromTo(socialButtons, 
-                        {
-                            opacity: 0,
-                            y: 40
-                        },
-                        {
-                            opacity: 1,
-                            y: 0,
-                            duration: 0.6,
-                            stagger: 0.2,
-                            ease: 'power2.out'
-                        }
-                    );
-                    observer.unobserve(entry.target);
-                }
-            });
-        });
-
-        observer.observe(document.querySelector('#redes'));
-
-        // Social Buttons Hover
-        const socialButtons = document.querySelectorAll('.social-button');
-        socialButtons.forEach(button => {
-            button.addEventListener('mouseenter', () => {
-                gsap.to(button, {
-                    scale: 1.1,
-                    skewX: 5,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-            });
-
-            button.addEventListener('mouseleave', () => {
-                gsap.to(button, {
-                    scale: 1,
-                    skewX: 0,
-                    duration: 0.3,
-                    ease: 'power2.out'
-                });
-            });
-        });
 
         // Gallery Animation
         window.addEventListener('load', () => {
@@ -1434,6 +1993,300 @@
                 }
             });
         });
+
+        // Banner Effects Function
+        function initBannerEffects(selector) {
+            document.querySelectorAll(selector).forEach(row => {
+                const cards = row.querySelectorAll('.banner-card');
+
+                // Aplica el escalonado leído del data-mt de cada card
+                cards.forEach(card => {
+                    const mt = Number(card.dataset.mt || 0);
+                    card.style.setProperty('--mt', mt + 'px');
+                });
+
+                // ENTRADA: alterna arriba/abajo; la primera baja desde más arriba
+                cards.forEach((card, i) => {
+                    const isFirst = i === 0;
+                    const fromY = isFirst ? -200 : (i % 2 === 0 ? -140 : 140);
+                    gsap.fromTo(card,
+                        { y: fromY, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 1.5 + i * 0.2, clearProps: "transform,opacity" }
+                    );
+                });
+
+                // FLOTACIÓN: arranca después de la entrada para no taparla
+                cards.forEach((card, i) => {
+                    gsap.to(card, {
+                        y: "+=14", duration: 3, ease: "sine.inOut",
+                        repeat: -1, yoyo: true, delay: 2.8 + i * 0.5
+                    });
+                });
+            });
+        }
+
+        // Inicializa el efecto de banners cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            initBannerEffects('#bannersDemo');
+            initAboutAnimations();
+            initFloatingWhatsApp();
+            initSocialAnimations();
+        });
+
+        // Floating WhatsApp Button Control
+        function initFloatingWhatsApp() {
+            const floatingBtn = document.querySelector('.floating_btn');
+            const heroSection = document.querySelector('#hero');
+            const footer = document.querySelector('footer');
+            
+            if (!floatingBtn || !heroSection || !footer) return;
+
+            function updateButtonPosition() {
+                const scrollY = window.scrollY;
+                const heroHeight = heroSection.offsetHeight;
+                const footerTop = footer.offsetTop;
+                const footerHeight = footer.offsetHeight;
+                const windowHeight = window.innerHeight;
+                const buttonHeight = 100; // altura del botón flotante
+                
+                // Solo mostrar después de salir del hero
+                if (scrollY > heroHeight - 100) {
+                    floatingBtn.classList.add('show');
+                } else {
+                    floatingBtn.classList.remove('show');
+                    return;
+                }
+                
+                // Calcular si el botón debe detenerse en el footer
+                const scrollBottom = scrollY + windowHeight;
+                const footerVisibleHeight = Math.max(0, scrollBottom - footerTop);
+                
+                if (footerVisibleHeight > 0) {
+                    // El footer está visible, posicionar el botón encima del footer
+                    const bottomOffset = footerVisibleHeight + 30; // 30px de margen
+                    floatingBtn.style.bottom = bottomOffset + 'px';
+                } else {
+                    // Footer no visible, posición normal
+                    floatingBtn.style.bottom = '30px';
+                }
+            }
+
+            // Escuchar scroll
+            window.addEventListener('scroll', updateButtonPosition);
+            
+            // Ejecutar al cargar
+            updateButtonPosition();
+        }
+
+        // About Section Scroll Animations
+        function initAboutAnimations() {
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            // Observer para elementos generales
+            const elementsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, observerOptions);
+
+            // Observer para estadísticas con contador animado
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                        const statNumbers = entry.target.querySelectorAll('.stat-number');
+                        statNumbers.forEach(animateCounter);
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observar elementos de la sección about
+            document.querySelectorAll('.about-title, .about-subtitle, .about-text').forEach(el => {
+                elementsObserver.observe(el);
+            });
+
+            // Observar tarjetas con delay escalonado
+            document.querySelectorAll('.feature-card').forEach((card, index) => {
+                card.style.transitionDelay = `${0.2 + index * 0.1}s`;
+                elementsObserver.observe(card);
+            });
+
+            // Observar sección de estadísticas
+            const statsSection = document.querySelector('.stats-section');
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
+        }
+
+        // Función para animar contadores
+        function animateCounter(element) {
+            const target = parseInt(element.getAttribute('data-target'));
+            const duration = 2000; // 2 segundos
+            const step = target / (duration / 16); // 60 FPS
+            let current = 0;
+
+            const updateCounter = () => {
+                current += step;
+                if (current < target) {
+                    element.textContent = Math.floor(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target;
+                }
+            };
+
+            // Delay para que empiecen los contadores uno por uno
+            setTimeout(() => {
+                updateCounter();
+            }, Math.random() * 500);
+        }
+
+        // Social Media Animations
+        function initSocialAnimations() {
+            // ScrollTrigger para la sección social
+            const socialObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Animar título
+                        gsap.to('.social-title', {
+                            opacity: 1,
+                            y: 0,
+                            duration: 1,
+                            ease: 'power2.out'
+                        });
+
+                        // Animar subtítulo
+                        gsap.to('.social-subtitle', {
+                            opacity: 1,
+                            y: 0,
+                            duration: 1,
+                            ease: 'power2.out',
+                            delay: 0.3
+                        });
+
+                        // Animar líneas de conexión
+                        setTimeout(() => {
+                            document.querySelectorAll('.connection-line').forEach(line => {
+                                line.classList.add('active');
+                            });
+                        }, 800);
+
+                        // Animar iconos con efecto morphing
+                        gsap.to('.social-icon-wrapper', {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 1.2,
+                            ease: 'back.out(1.7)',
+                            stagger: 0.3,
+                            delay: 1
+                        });
+
+                        // Efecto de flotación continua
+                        setTimeout(() => {
+                            document.querySelectorAll('.social-icon').forEach((icon, index) => {
+                                gsap.to(icon, {
+                                    y: "+=10",
+                                    duration: 2 + index * 0.5,
+                                    ease: "sine.inOut",
+                                    repeat: -1,
+                                    yoyo: true,
+                                    delay: index * 0.3
+                                });
+                            });
+                        }, 2000);
+
+                        socialObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            const socialSection = document.querySelector('#social-contact');
+            if (socialSection) {
+                socialObserver.observe(socialSection);
+            }
+
+            // Efecto hover mejorado con GSAP
+            document.querySelectorAll('.social-icon').forEach(icon => {
+                icon.addEventListener('mouseenter', () => {
+                    gsap.to(icon, {
+                        scale: 1.15,
+                        rotationY: icon.classList.contains('facebook') ? 20 : -20,
+                        rotationX: 10,
+                        duration: 0.4,
+                        ease: 'power2.out'
+                    });
+
+                    // Efecto de partículas simulado
+                    gsap.fromTo(icon, 
+                        { boxShadow: "0 15px 35px rgba(0,0,0,0.3)" },
+                        { 
+                            boxShadow: "0 25px 50px rgba(0,0,0,0.5)",
+                            duration: 0.4,
+                            ease: 'power2.out'
+                        }
+                    );
+                });
+
+                icon.addEventListener('mouseleave', () => {
+                    gsap.to(icon, {
+                        scale: 1,
+                        rotationY: 0,
+                        rotationX: 0,
+                        duration: 0.4,
+                        ease: 'power2.out'
+                    });
+                });
+
+                // Efecto de click con ondas
+                icon.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Crear elemento de onda
+                    const ripple = document.createElement('div');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255,255,255,0.6);
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    
+                    const rect = icon.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+                    ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+                    
+                    icon.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                        // Aquí iría la redirección real
+                        console.log('Navegando a red social...', icon.className);
+                    }, 600);
+                });
+            });
+        }
+
+        // CSS para el efecto ripple
+        const rippleStyle = document.createElement('style');
+        rippleStyle.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(rippleStyle);
     </script>
 </body>
 </html>
