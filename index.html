@@ -1123,24 +1123,24 @@
             }
 
             .gallery-item {
-                height: 120px;
+                height: 150px;
                 flex: none;
-                transition: height 0.6s ease, flex 0.6s ease;
+                transition: height 0.4s ease;
                 position: relative;
+                cursor: pointer;
+                border: 2px solid transparent;
             }
 
-            .gallery-item:active,
-            .gallery-item:focus {
-                height: 250px;
-                outline: none;
+            .gallery-item.expanded {
+                height: 300px;
+                border-color: var(--stanley-yellow);
             }
 
             .gallery-item::after {
-                opacity: 0.3;
+                opacity: 0.4;
             }
 
-            .gallery-item:active::after,
-            .gallery-item:focus::after {
+            .gallery-item.expanded::after {
                 opacity: 0;
             }
 
@@ -1149,14 +1149,32 @@
                 transform: translateY(0);
                 bottom: 15px;
                 left: 15px;
+                transition: all 0.3s ease;
+            }
+
+            .gallery-item.expanded .item-info {
+                opacity: 1;
+                transform: translateY(0);
+                bottom: 20px;
+                left: 20px;
             }
 
             .item-name {
                 font-size: 1.1rem;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
             }
 
             .item-color {
                 font-size: 0.85rem;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+            }
+
+            .gallery-item.expanded .item-name {
+                font-size: 1.3rem;
+            }
+
+            .gallery-item.expanded .item-color {
+                font-size: 1rem;
             }
 
             /* TESTIMONIOS MOBILE */
@@ -1346,12 +1364,11 @@
             }
 
             .gallery-item {
-                height: 100px;
+                height: 120px;
             }
 
-            .gallery-item:active,
-            .gallery-item:focus {
-                height: 200px;
+            .gallery-item.expanded {
+                height: 250px;
             }
 
             .item-name {
@@ -1663,16 +1680,25 @@
                 cursor: pointer;
             }
 
-            .gallery-item:hover {
-                flex: 1;
+            /* En desktop, mantener hover normal */
+            @media (min-width: 769px) {
+                .gallery-item:hover {
+                    flex: 7;
+                }
             }
 
-            .gallery-item:active {
-                flex: 7;
+            /* En mobile, usar sistema de clases */
+            @media (max-width: 768px) {
+                .gallery-item:hover {
+                    flex: none;
+                }
+                
+                .gallery-item.expanded {
+                    flex: none;
+                }
             }
 
             .gallery-item:focus {
-                flex: 7;
                 outline: 3px solid var(--stanley-yellow);
                 outline-offset: 2px;
             }
@@ -1827,7 +1853,6 @@
                     <li><a href="#faq">FAQ</a></li>
                 </ul>
             </nav>
-            <a href="https://wa.me/5492604000000?text=Hola%20quiero%20info%20de%20productos%20Stanley" class="header-cta">Contactar</a>
         </div>
     </header>
 
@@ -2347,27 +2372,54 @@
         function initTouchImprovements() {
             // Mejorar gallery para dispositivos táctiles
             const galleryItems = document.querySelectorAll('.gallery-item');
+            let activeItem = null;
+            
             galleryItems.forEach(item => {
                 // Hacer los elementos accesibles por teclado
                 item.setAttribute('tabindex', '0');
                 item.setAttribute('role', 'button');
+                item.setAttribute('aria-label', `Ver producto ${item.querySelector('.item-name')?.textContent || ''}`);
                 
-                // Agregar eventos táctiles
-                item.addEventListener('touchstart', function() {
-                    this.style.transition = 'all 0.2s ease';
+                // Función para toggle expanded
+                const toggleExpanded = (clickedItem) => {
+                    // Si ya hay un item activo y no es el mismo, lo contraemos
+                    if (activeItem && activeItem !== clickedItem) {
+                        activeItem.classList.remove('expanded');
+                    }
+                    
+                    // Toggle del item clickeado
+                    clickedItem.classList.toggle('expanded');
+                    
+                    // Actualizar item activo
+                    activeItem = clickedItem.classList.contains('expanded') ? clickedItem : null;
+                };
+                
+                // Click/Touch events
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    toggleExpanded(this);
                 });
-                
-                item.addEventListener('touchend', function() {
-                    this.style.transition = 'all 0.6s ease';
+
+                item.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    toggleExpanded(this);
                 });
 
                 // Soporte para teclado
                 item.addEventListener('keydown', function(e) {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        this.focus();
+                        toggleExpanded(this);
                     }
                 });
+            });
+
+            // Cerrar cuando se hace click fuera
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.gallery-item') && activeItem) {
+                    activeItem.classList.remove('expanded');
+                    activeItem = null;
+                }
             });
 
             // Mejorar scroll horizontal en banners
